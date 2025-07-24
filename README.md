@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# Word Imposter
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Inspired by videos on TikTok I made an app that makes it easier to play Word-Imposter
 
-## Get started
+## How to Play
 
-1. Install dependencies
+### 🎯 Objective
+Find the imposter among the players! Everyone gets the same word except one person who doesn't know the word (the imposter).
 
-   ```bash
-   npm install
-   ```
+### 📋 Game Rules
 
-2. Start the app
+1. **Setup:** Choose the number of players (3-12) and start the game. For a smooth experience, not more than 6 players are recommended.
+2. **View Words:** Each player secretly views their word one by one and passes the phone to the next person. Don't let others see your word!
+3. **Discussion:** When everyone has seen their word, players take turns describing their word using hints, clues, or related words (without saying the actual word).
+4. **Find the Imposter:** Listen carefully to everyone's descriptions and try to identify who doesn't know the word. Continue until someone thinks they have found the imposter.
+5. **Voting:** After discussion, everyone votes on who they think is the imposter. End the game and the imposter is revealed.
 
-   ```bash
-   npx expo start
-   ```
+### 🏆 Winning
 
-In the output, you'll find options to open the app in a
+- 👥 **Regular Players Win:** If they correctly identify the imposter.
+- 🕵️ **Imposter Wins:** If they avoid being detected and players vote incorrectly.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**💡 Tips**
+- **For Regulars:** Give specific but not too obvious clues, or else the imposter might find out the real word!
+- **For Imposters:** Listen carefully and give vague, general descriptions.
+- **For Everyone:** Pay attention to who gives suspicious or off-topic clues.
