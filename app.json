@@ -2,7 +2,7 @@
   "expo": {
     "name": "word-imposter",
     "slug": "word-imposter",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "wordimposter",

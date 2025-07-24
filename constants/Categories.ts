@@ -19,7 +19,9 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Oprah Winfrey', 'Barack Obama', 'Abraham Lincoln', 'Frida Kahlo', 'Andy Warhol', 'John Lennon',
       'Madonna', 'Michael Jordan', 'Muhammad Ali', 'Serena Williams', 'Lionel Messi', 'Cristiano Ronaldo',
       'Mark Zuckerberg', 'Warren Buffett', 'Nikola Tesla', 'Galileo Galilei', 'Alexander the Great',
-      'Julius Caesar', 'Theodore Roosevelt', 'Franklin D. Roosevelt', 'John F. Kennedy'
+      'Julius Caesar', 'Theodore Roosevelt', 'Franklin D. Roosevelt', 'John F. Kennedy', 'Gordon Ramsay',
+      'Drake', 'Kanye West', 'Bruno Mars', 'The Rock', 'Arnold Schwarzenegger', 'Will Smith',
+      'Lady Gaga', 'Adele', 'Ed Sheeran', 'Justin Bieber', 'Ariana Grande', 'Rihanna', 'Leonardo DiCaprio'
     ]
   },
   {
@@ -33,7 +35,14 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Chocolate', 'Cookie', 'Donut', 'Pancake', 'Waffle', 'Pie', 'Taco', 'Burrito',
       'Curry', 'Ramen', 'Croissant', 'Bagel', 'Muffin', 'Smoothie', 'Milkshake', 'Lemonade',
       'Popcorn', 'Pretzel', 'French Fries', 'Onion Rings', 'Hot Dog', 'BBQ', 'Lasagna', 'Risotto',
-      'Spaghetti', 'Carbonara', 'Tiramisu', 'Cheesecake', 'Brownie', 'Cupcake', 'Muffin'
+      'Spaghetti', 'Carbonara', 'Tiramisu', 'Cheesecake', 'Brownie', 'Cupcake', 'Muffin',
+      'Yogurt', 'Cereal', 'Oatmeal', 'Toast', 'Jam', 'Honey', 'Butter', 'Milk', 'Hummus', 
+      'Egg', 'Bacon', 'Ham', 'Turkey', 'Salmon', 'Tuna', 'Shrimp', 'Lobster', 'Wrap', 
+      'Potato', 'Carrot', 'Broccoli', 'Spinach', 'Tomato', 'Cucumber', 'Onion', 'Garlic',
+      'Strawberry', 'Blueberry', 'Grape', 'Pineapple', 'Mango', 'Avocado', 'Lemon', 'Lime',
+      'Nuts', 'Peanut Butter', 'Crackers', 'Chips', 'Nachos', 'Salsa', 'Guacamole',
+      'Noodles', 'Dumplings', 'Spring Roll', 'Fried Rice', 'Kebab', 'Falafel', 'Pita Bread'
+      
     ]
   },
   {
@@ -47,7 +56,14 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Candle', 'Backpack', 'Wallet', 'Headphones', 'Television', 'Radio', 'Microwave',
       'Refrigerator', 'Toaster', 'Blender', 'Vacuum', 'Washing Machine', 'Dryer', 'Iron',
       'Scissors', 'Hammer', 'Screwdriver', 'Ladder', 'Toolbox', 'Flashlight', 'Battery',
-      'Charger', 'Remote Control', 'Gaming Console', 'Keyboard', 'Mouse', 'Monitor'
+      'Charger', 'Remote Control', 'Gaming Console', 'Keyboard', 'Mouse', 'Monitor',
+      'Sofa', 'Bed', 'Desk', 'Shelf', 'Cabinet', 'Drawer', 'Curtain', 'Carpet',
+      'Vase', 'Picture Frame', 'Painting', 'Poster', 'Calendar', 'Notebook', 'Pencil',
+      'Eraser', 'Ruler', 'Stapler', 'Tape', 'Glue', 'Marker', 'Highlighter',
+      'Plate', 'Bowl', 'Cup', 'Glass', 'Fork', 'Knife', 'Spoon', 'Napkin',
+      'Towel', 'Soap', 'Shampoo', 'Toothbrush', 'Toothpaste', 'Comb', 'Brush',
+      'Sunglasses', 'Scarf', 'Gloves', 'Belt', 'Tie', 'Jacket', 'Sweater', 'T-shirt',
+      'Jeans', 'Socks', 'Sneakers', 'Boots', 'Sandals', 'Slippers', 'Pajamas'
     ]
   },
   {
@@ -93,7 +109,8 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Heineken', 'Lego', 'IKEA', 'H&M', 'Zara', 'Puma', 'Reebok', 'Shell', 'Coca-Cola', 'Philips',
       'Tesla', 'Volkswagen', 'Ford', 'Honda', 'Nissan', 'Ferrari', 'Porsche', 'Lamborghini',
       'Louis Vuitton', 'Gucci', 'Chanel', 'Rolex', 'Omega', 'Calvin Klein', 'Ralph Lauren',
-      'Visa', 'Mastercard', 'PayPal', 'eBay', 'Airbnb', 'TikTok', 'LinkedIn', 'WhatsApp'
+      'Visa', 'Mastercard', 'PayPal', 'eBay', 'Airbnb', 'TikTok', 'LinkedIn', 'WhatsApp',
+      'Burger King', 'New York Pizza', 'New Balance', 'Audi', 'Red Bull', 'Tommy Hilfiger'
     ]
   },
   {
@@ -119,7 +136,8 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Concert', 'Orchestra', 'Band', 'Singer', 'Composer', 'Album', 'Song', 'Melody',
       'Bass Guitar', 'Keyboard', 'Cello', 'Clarinet', 'Trombone', 'Harmonica', 'Ukulele',
       'Reggae', 'Folk', 'Opera', 'Symphony', 'Choir', 'Solo', 'Duet', 'Trio', 'Quartet',
-      'DJ', 'Producer', 'Studio', 'Recording', 'Headphones', 'Microphone', 'Amplifier'
+      'DJ', 'Producer', 'Studio', 'Recording', 'Headphones', 'Microphone', 'Amplifier',
+      'Metal', 'Punk', 'Indie', 'Alternative', 'Grunge', 'Ska', 'Swing', 'Gospel',
     ]
   },
   {
@@ -132,7 +150,15 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Church', 'Hotel', 'Garden', 'Farm', 'Zoo', 'Island', 'Castle', 'Bridge',
       'University', 'Gym', 'Spa', 'Bank', 'Post Office', 'Pharmacy', 'Bakery', 'Bookstore',
       'Gas Station', 'Parking Lot', 'Playground', 'Swimming Pool', 'Tennis Court', 'Golf Course',
-      'Aquarium', 'Planetarium', 'Observatory', 'Lighthouse', 'Cave', 'Waterfall', 'Valley'
+      'Aquarium', 'Planetarium', 'Observatory', 'Lighthouse', 'Cave', 'Waterfall', 'Valley',
+      'Coffee Shop', 'Café', 'Bar', 'Pub', 'Nightclub', 'Lounge', 'Diner', 'Food Court',
+      'Supermarket', 'Grocery Store', 'Convenience Store', 'Department Store', 'Boutique',
+      'Salon', 'Barbershop', 'Laundromat', 'Dry Cleaner', 'Tailor', 'Shoe Store',
+      'Flower Shop', 'Pet Store', 'Toy Store', 'Electronics Store', 'Furniture Store',
+      'Office Building', 'Factory', 'Warehouse', 'Workshop', 'Studio', 'Laboratory',
+      'Clinic', 'Dentist Office', 'Fire Station', 'Police Station',
+      'City Hall', 'Court House', 'Embassy', 'Temple', 'Mosque', 'Synagogue',
+      'Beach House', 'Cabin', 'Cottage', 'Mansion', 'Apartment', 'Condo', 'Penthouse'
     ]
   },
   {
@@ -147,7 +173,9 @@ export const DEFAULT_CATEGORIES: Category[] = [ // these are all the words that 
       'Turtle', 'Frog', 'Lizard', 'Crocodile', 'Kangaroo', 'Koala', 'Panda', 'Gorilla',
       'Tree', 'Flower', 'Rose', 'Sunflower', 'Grass', 'Leaf', 'Branch', 'Root',
       'Ocean', 'River', 'Lake', 'Stream', 'Rain', 'Snow', 'Wind', 'Storm',
-      'Sun', 'Moon', 'Star', 'Cloud', 'Rainbow', 'Lightning', 'Thunder'
+      'Sun', 'Moon', 'Star', 'Cloud', 'Rainbow', 'Lightning', 'Thunder',
+      'Hamster', 'Guinea Pig', 'Goldfish', 'Parakeet', 'Canary', 'Tropical Fish',
+      'Seal', 'Sea Lion', 'Walrus', 'Polar Bear', 'Brown Bear', 'Black Bear', 
     ]
   },
   {
