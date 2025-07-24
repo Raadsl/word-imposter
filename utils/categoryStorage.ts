@@ -3,24 +3,41 @@ import { Category, DEFAULT_CATEGORIES } from '@/constants/Categories';
 
 const CATEGORIES_STORAGE_KEY = '@WordImposter:categories';
 const HINT_SETTING_STORAGE_KEY = '@WordImposter:giveImposterHint';
+const CUSTOM_WORDS_STORAGE_KEY = '@WordImposter:customWords';
 
 export async function getSelectedCategories(): Promise<Category[]> {
   try {
     const stored = await AsyncStorage.getItem(CATEGORIES_STORAGE_KEY);
+    const customWords = await getCustomWords();
+    let categories: Category[];
     if (stored) {
-      return JSON.parse(stored);
+      categories = JSON.parse(stored);
+    } else {
+      categories = DEFAULT_CATEGORIES;
     }
-    // Return default categories if none stored
-    return DEFAULT_CATEGORIES;
+    // Always update custom-words category with latest custom words
+    categories = categories.map(cat =>
+      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+    );
+    return categories;
   } catch (error) {
     console.error('Error loading categories:', error);
-    return DEFAULT_CATEGORIES;
+    // Fallback: update custom-words in default categories
+    const customWords = await getCustomWords();
+    return DEFAULT_CATEGORIES.map(cat =>
+      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+    );
   }
 }
 
 export async function saveSelectedCategories(categories: Category[]): Promise<void> {
   try {
-    await AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
+    // If custom-words category is present, update its words property with the latest custom words
+    const customWords = await getCustomWords();
+    const updatedCategories = categories.map(cat =>
+      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+    );
+    await AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(updatedCategories));
   } catch (error) {
     console.error('Error saving categories:', error);
   }
@@ -66,5 +83,38 @@ export async function saveImposterHintSetting(enabled: boolean): Promise<void> {
     await AsyncStorage.setItem(HINT_SETTING_STORAGE_KEY, JSON.stringify(enabled));
   } catch (error) {
     console.error('Error saving hint setting:', error);
+  }
+}
+
+export async function getCustomWords(): Promise<string[]> {
+  try {
+    const stored = await AsyncStorage.getItem(CUSTOM_WORDS_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Error loading custom words:', error);
+    return [];
+  }
+}
+
+export async function saveCustomWords(words: string[]): Promise<void> {
+  try {
+    await AsyncStorage.setItem(CUSTOM_WORDS_STORAGE_KEY, JSON.stringify(words));
+    // Update categories so custom-words category is synced
+    const categories = await getSelectedCategories();
+    await saveSelectedCategories(categories);
+  } catch (error) {
+    console.error('Error saving custom words:', error);
+  }
+}
+
+export async function addCustomWord(word: string): Promise<void> {
+  try {
+    const words = await getCustomWords();
+    if (!words.includes(word)) {
+      words.push(word);
+      await saveCustomWords(words);
+    }
+  } catch (error) {
+    console.error('Error adding custom word:', error);
   }
 }

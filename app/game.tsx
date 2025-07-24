@@ -99,15 +99,20 @@ export default function GameScreen() {
   }
 
   function endGame() {
-    // ask the user to confirm!!
+    // ask the user to confirm. If platform is web, use confirm dialog
+    if (typeof window !== 'undefined') {
+      const confirmed = window.confirm('Are you sure you want to end the game?');
+      if (confirmed) setGamePhase('ending');
+      return; 
+    }
     Alert.alert('Confirm', 'Are you sure you want to end the game?', [
-    {
-      text: 'Cancel',
-      onPress: () => console.log('Cancel Pressed'),
-      style: 'cancel',
-    },
-    {text: 'Yes', onPress: () => setGamePhase('ending')},
-  ]);
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Yes', onPress: () => setGamePhase('ending')},
+    ]);
   }
 
   function handleNextPlayer() {
@@ -195,7 +200,7 @@ export default function GameScreen() {
 
 
             <ThemedButton
-              title="Confirm"
+              title="Reveal the Imposter"
               variant="primary"
               size="lg"
               onPress={endGame}
