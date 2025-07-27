@@ -1,5 +1,21 @@
+import { Category, DEFAULT_CATEGORIES, Language } from '@/constants/Categories';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Category, DEFAULT_CATEGORIES } from '@/constants/Categories';
+const LANGUAGE_STORAGE_KEY = '@WordImposter:language';
+export async function getLanguageSetting(): Promise<Language> {
+  try {
+    const stored = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (stored === 'nl' || stored === 'en') return stored;
+    return 'en';
+  } catch {
+    return 'en';
+  }
+}
+
+export async function saveLanguageSetting(lang: Language): Promise<void> {
+  try {
+    await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+  } catch {}
+}
 
 const CATEGORIES_STORAGE_KEY = '@WordImposter:categories';
 const HINT_SETTING_STORAGE_KEY = '@WordImposter:giveImposterHint';
@@ -17,7 +33,9 @@ export async function getSelectedCategories(): Promise<Category[]> {
     }
     // Always update custom-words category with latest custom words
     categories = categories.map(cat =>
-      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+      cat.id === 'custom-words'
+        ? { ...cat, words: { en: customWords, nl: customWords } }
+        : cat
     );
     return categories;
   } catch (error) {
@@ -25,7 +43,9 @@ export async function getSelectedCategories(): Promise<Category[]> {
     // Fallback: update custom-words in default categories
     const customWords = await getCustomWords();
     return DEFAULT_CATEGORIES.map(cat =>
-      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+      cat.id === 'custom-words'
+        ? { ...cat, words: { en: customWords, nl: customWords } }
+        : cat
     );
   }
 }
@@ -35,7 +55,9 @@ export async function saveSelectedCategories(categories: Category[]): Promise<vo
     // If custom-words category is present, update its words property with the latest custom words
     const customWords = await getCustomWords();
     const updatedCategories = categories.map(cat =>
-      cat.id === 'custom-words' ? { ...cat, words: customWords } : cat
+      cat.id === 'custom-words'
+        ? { ...cat, words: { en: customWords, nl: customWords } }
+        : cat
     );
     await AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(updatedCategories));
   } catch (error) {

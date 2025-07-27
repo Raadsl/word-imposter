@@ -1,16 +1,15 @@
-import { StyleSheet, View, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
+import { ThemedButton } from '@/components/ThemedButton';
+import { ThemedContainer } from '@/components/ThemedContainer';
+import { ThemedInput } from '@/components/ThemedInput';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { ThemedButton } from '@/components/ThemedButton';
-import { ThemedInput } from '@/components/ThemedInput';
-import { ThemedContainer } from '@/components/ThemedContainer';
+import { Category, Language } from '@/constants/Categories';
 import { useAppTheme } from '@/hooks/useAppTheme';
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import { Category } from '@/constants/Categories';
-import { getSelectedCategories, saveSelectedCategories, toggleCategory, resetCategoriesToDefault, getImposterHintSetting, saveImposterHintSetting, getCustomWords, addCustomWord, saveCustomWords } from '@/utils/categoryStorage';
+import { addCustomWord, getCustomWords, getImposterHintSetting, getLanguageSetting, getSelectedCategories, resetCategoriesToDefault, saveCustomWords, saveImposterHintSetting, saveLanguageSetting, toggleCategory } from '@/utils/categoryStorage';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 
-import BottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 export default function SettingsScreen() {
   const theme = useAppTheme();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -18,6 +17,7 @@ export default function SettingsScreen() {
   const [customText, setCustomText] = useState('');
   const [customWords, setCustomWords] = useState<string[]>([]);
   const [giveImposterHint, setGiveImposterHint] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -50,7 +50,21 @@ export default function SettingsScreen() {
     loadCustomWords();
     loadCategories();
     loadHintSetting();
+    loadLanguageSetting();
   }, []);
+
+  const loadLanguageSetting = async () => {
+    try {
+      const lang = await getLanguageSetting();
+      if (lang === 'en' || lang === 'nl') setLanguage(lang);
+    } catch (error) {
+      // fallback to 'en'
+    }
+  };
+  const handleLanguageSwitch = async (lang: Language) => {
+    setLanguage(lang);
+    await saveLanguageSetting(lang);
+  };
 
   const loadCategories = async () => {
     try {
@@ -142,7 +156,8 @@ export default function SettingsScreen() {
   const enabledCount = categories.filter(cat => cat.enabled).length;
   const totalWords = categories
     .filter(cat => cat.enabled)
-    .reduce((sum, cat) => sum + cat.words.length, 0);
+    .reduce((sum, cat) => sum + (cat.words[language]?.length || 0), 0);
+
 
   if (loading) {
     return (
@@ -163,10 +178,28 @@ export default function SettingsScreen() {
             <ThemedText type="subtitle" style={{ textAlign: 'center', marginTop: 8 }}>
               Choose which categories to include in the game
             </ThemedText>
-            
-            <ThemedView style={[styles.statsContainer, { backgroundColor: theme.colors.surface }]}>
-              <ThemedText style={{ textAlign: 'center' }}>
-                {enabledCount} categories enabled • {totalWords} words available
+            {/* Language Switch */}
+            <ThemedView style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
+              <ThemedButton
+                title="English"
+                variant={language === 'en' ? 'primary' : 'outline'}
+                size="sm"
+                onPress={() => handleLanguageSwitch('en')}
+                style={{ marginRight: 8 }}
+              />
+              <ThemedButton
+                title="Nederlands"
+                variant={language === 'nl' ? 'primary' : 'outline'}
+                size="sm"
+                onPress={() => handleLanguageSwitch('nl')}
+              />
+            </ThemedView>
+            <ThemedView style={[styles.statsContainer, { backgroundColor: theme.colors.surface }]}> 
+              <ThemedText style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                {enabledCount} categories enabled
+              </ThemedText>
+              <ThemedText style={{ textAlign: 'center', marginTop: 2 }}>
+                Words available: <ThemedText style={{ fontWeight: 'bold' }}>{totalWords}</ThemedText> ({language === 'en' ? 'English' : 'Nederlands'})
               </ThemedText>
             </ThemedView>
           </ThemedView>
@@ -199,12 +232,13 @@ export default function SettingsScreen() {
           <ThemedView style={styles.categoriesContainer}>
             {categories.map((category) => {
               const isCustom = category.id === 'custom-words';
+              const countCurrent = isCustom ? customWords.length : (category.words[language]?.length || 0);
               return (
-                <View key={category.id} style={[styles.categoryItem, { backgroundColor: theme.colors.surface }]}>
+                <View key={category.id} style={[styles.categoryItem, { backgroundColor: theme.colors.surface }]}> 
                   <View style={styles.categoryInfo}>
                     <ThemedText type="subtitle">{category.name}</ThemedText>
                     <ThemedText style={{ color: theme.colors.icon, fontSize: 14 }}>
-                      {isCustom ? customWords.length : category.words.length} words
+                      {countCurrent} words
                     </ThemedText>
                   </View>
                   <Switch

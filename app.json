@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "word-imposter",
-    "slug": "word-imposter",
-    "version": "0.1.9",
+    "name": "Word Imposter",
+    "slug": "Word Imposter",
+    "version": "0.1.10",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "wordimposter",

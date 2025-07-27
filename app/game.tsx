@@ -1,16 +1,16 @@
-import { StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { FlipCard } from '@/components/FlipCard';
 import { ThemedButton } from '@/components/ThemedButton';
 import { ThemedContainer } from '@/components/ThemedContainer';
-import { FlipCard } from '@/components/FlipCard';
-import { useAppTheme } from '@/hooks/useAppTheme';
-import { useEffect, useState } from 'react';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useSharedValue } from 'react-native-reanimated';
-import { getSelectedCategories, getImposterHintSetting } from '@/utils/categoryStorage';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { getRandomWordFromCategories } from '@/constants/Categories';
+import { useAppTheme } from '@/hooks/useAppTheme';
+import { getImposterHintSetting, getLanguageSetting, getSelectedCategories } from '@/utils/categoryStorage';
+import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { useSharedValue } from 'react-native-reanimated';
 
 export default function GameScreen() {
   const theme = useAppTheme();
@@ -36,24 +36,24 @@ export default function GameScreen() {
 
   const initializeGame = async () => {
     try {
-      // Load selected categories and get random word
+      // Load selected categories and language
       const selectedCategories = await getSelectedCategories();
-      const randomWord = getRandomWordFromCategories(selectedCategories);
-      
+      const language = await getLanguageSetting();
+      const randomWord = getRandomWordFromCategories(selectedCategories, language);
+
       // Load hint setting
       const hintSetting = await getImposterHintSetting();
       setHintEnabled(hintSetting);
-      
+
       if (!randomWord) {
-        // Fallback to a default word if no categories selected
         setCurrentWord('Mystery');
         setSelectedCategory('General');
       } else {
         setCurrentWord(randomWord);
         // Find which category this word belongs to
         const enabledCategories = selectedCategories.filter(cat => cat.enabled);
-        const wordCategory = enabledCategories.find(cat => 
-          cat.words.includes(randomWord)
+        const wordCategory = enabledCategories.find(cat =>
+          cat.words[language]?.includes(randomWord)
         );
         setSelectedCategory(wordCategory?.name || 'General');
       }
@@ -61,11 +61,11 @@ export default function GameScreen() {
       // Set up imposter and starting player
       const randomImposter = Math.floor(Math.random() * numPlayers) + 1;
       setImposter(randomImposter);
-      
+
       // Make the chance of the starting player being the imposter lower
       const randomStartingPlayer = Math.floor(Math.random() * numPlayers) + 1;
       setStartingPlayer(randomStartingPlayer);
-      
+
       if (randomStartingPlayer === randomImposter) {
         // 40% chance to make someone else the imposter
         if (Math.random() < 0.4) {
@@ -75,7 +75,7 @@ export default function GameScreen() {
       }
     } catch (error) {
       console.error('Error initializing game:', error);
-      setCurrentWord('Mystery'); // Fallback word
+      setCurrentWord('Mystery');
       setSelectedCategory('General');
     } finally {
       setLoadingWord(false);
