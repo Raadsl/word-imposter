@@ -99,20 +99,20 @@ export default function GameScreen() {
   }
 
   function endGame() {
-    // ask the user to confirm. If platform is web, use confirm dialog
-    if (typeof window !== 'undefined') {
-      const confirmed = window.confirm('Are you sure you want to end the game?');
-      if (confirmed) setGamePhase('ending');
-      return; 
+    try {
+      Alert.alert('Confirm', 'Are you sure you want to end the game?', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'Yes', onPress: () => setGamePhase('ending')},
+      ]);
+    } catch (error) {
+      console.error('Error ending game:', error);
+      Alert.alert('Error', 'An error occurred while trying to end the game.');
+      setGamePhase('ending')
     }
-    Alert.alert('Confirm', 'Are you sure you want to end the game?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Yes', onPress: () => setGamePhase('ending')},
-    ]);
   }
 
   function handleNextPlayer() {
@@ -221,13 +221,13 @@ export default function GameScreen() {
               Imposter:
             </ThemedText>
             <ThemedText style={{ textAlign: 'center', color: theme.colors.error, marginBottom: 20 }} type="subtitle">
-              Player {imposter} was the imposter!
+              {imposter ? `Player ${imposter} was the imposter!` : 'Imposter unknown.'}
             </ThemedText>
             <ThemedText style={{ textAlign: 'center' }} type="title">
               Word:
             </ThemedText>
             <ThemedText style={{ textAlign: 'center' }} type="subtitle">
-              {currentWord}
+              {currentWord || 'Unknown'}
             </ThemedText>
             <ThemedButton
               title="New Game"
@@ -246,7 +246,6 @@ export default function GameScreen() {
               }}
               style={{ marginVertical: theme.spacing.md }}
             />
-            
           </ThemedView>
         </ThemedContainer>
       </ScrollView>
