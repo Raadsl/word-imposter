@@ -2,15 +2,15 @@
   "expo": {
     "name": "Word Imposter",
     "slug": "word-imposter",
-    "version": "0.1.10",
+    "version": "0.1.12",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "wordimposter",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-    "supportsTablet": true,
-    "bundleIdentifier": "com.raadsel.wordimposter"
+      "supportsTablet": true,
+      "bundleIdentifier": "com.raadsel.wordimposter"
     },
     "android": {
       "adaptiveIcon": {
