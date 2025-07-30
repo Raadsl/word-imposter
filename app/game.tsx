@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Platform, ScrollView, StyleSheet, View } from 'react-native';
 
 import { FlipCard } from '@/components/FlipCard';
 import { ThemedButton } from '@/components/ThemedButton';
@@ -8,7 +8,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { getRandomWordFromCategories } from '@/constants/Categories';
 import { useAppTheme } from '@/hooks/useAppTheme';
 import { getImposterHintSetting, getLanguageSetting, getSelectedCategories } from '@/utils/categoryStorage';
-import { useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
 
@@ -28,7 +28,7 @@ export default function GameScreen() {
   const [hintEnabled, setHintEnabled] = useState(false);
   const isFlipped = useSharedValue(false);
 
-  const numPlayers = parseInt(playerCount || '4', 10);
+  const numPlayers = Math.max(3, Math.min(12, parseInt(playerCount || '4', 10))); // Ensure player count is between 3 and 12
 
   useEffect(() => {
     initializeGame();
@@ -100,18 +100,24 @@ export default function GameScreen() {
 
   function endGame() {
     try {
-      Alert.alert('Confirm', 'Are you sure you want to end the game?', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'Yes', onPress: () => setGamePhase('ending')},
-      ]);
+      if (Platform.OS === 'web') {
+        const confirmed = window.confirm('Are you sure you want to end the game?');
+        if (confirmed) {
+          setGamePhase('ending');
+        }
+      } else {
+        Alert.alert('Confirm', 'Are you sure you want to end the game?', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          { text: 'Yes', onPress: () => setGamePhase('ending') },
+        ]);
+      }
     } catch (error) {
       console.error('Error ending game:', error);
-      Alert.alert('Error', 'An error occurred while trying to end the game.');
-      setGamePhase('ending')
+      setGamePhase('ending');
     }
   }
 
@@ -154,13 +160,13 @@ export default function GameScreen() {
               📱
             </ThemedText>
             <ThemedText style={{ textAlign: 'center' }} type="title">
-              Hand Phone to Player {currentPlayer + 1}
+              Hand Device to Player {currentPlayer + 1}
             </ThemedText>
             <ThemedText style={{ textAlign: 'center', marginVertical: 20 }} type="subtitle">
               Make sure Player {currentPlayer} has looked away before continuing.
             </ThemedText>
             <ThemedText style={{ textAlign: 'center', marginBottom: 30, fontStyle: 'italic' }}>
-              Player {currentPlayer + 1}, press the button below when you're ready and have the phone.
+              Player {currentPlayer + 1}, press the button below when you're ready and have the device.
             </ThemedText>
             
             <ThemedButton
@@ -246,6 +252,9 @@ export default function GameScreen() {
               }}
               style={{ marginVertical: theme.spacing.md }}
             />
+            <Link href="/">
+              <ThemedText type="link">Or go back home</ThemedText>
+            </Link>
           </ThemedView>
         </ThemedContainer>
       </ScrollView>
@@ -261,7 +270,7 @@ export default function GameScreen() {
             You are player {currentPlayer} of {numPlayers}
           </ThemedText>
             <ThemedText style={{ textAlign: 'center' }} type="subtitle">
-            Do not show the phone to any other players!
+            Do not show the device to any other players!
             </ThemedText>
                <FlipCard
                  isFlipped={isFlipped}
@@ -299,7 +308,7 @@ export default function GameScreen() {
         
         {currentPlayer < numPlayers && wordRevealed && (
           <ThemedButton
-            title="Ready to Pass Phone"
+            title="Ready to Pass Device"
             variant="secondary"
             size="md"
             onPress={handleNextPlayer}

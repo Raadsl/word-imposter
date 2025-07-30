@@ -22,7 +22,32 @@ Find the imposter among the players! Everyone gets the same word except one pers
 
 ---
 
+
 **💡 Tips**
 - **For Regulars:** Give specific but not too obvious clues, or else the imposter might find out the real word!
 - **For Imposters:** Listen carefully and give vague, general descriptions.
 - **For Everyone:** Pay attention to who gives suspicious or off-topic clues.
+
+---
+
+## 📱 App Screenshots
+
+<p align="center">
+  <img src="assets/images/screenshots/mainscreen.png" alt="Main Screen" width="30%"/>
+  <img src="assets/images/screenshots/revealword-beforeflipping.png" alt="Reveal Word Before Flipping" width="30%"/>
+  <img src="assets/images/screenshots/reveal-imposter.png" alt="Reveal Imposter" width="30%"/>
+
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/handoverphone.png" alt="Hand Over Phone" width="30%"/>
+  <img src="assets/images/screenshots/revealword.png" alt="Reveal Word" width="30%"/>
+  <img src="assets/images/screenshots/gameison.png" alt="Game Is On" width="30%"/>
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/endgame.png" alt="End Game" width="30%"/>
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/howtoplay.png" alt="How To Play" width="30%"/>
+   <img src="assets/images/screenshots/settings.png" alt="Settings" width="30%"/>
+  <img src="assets/images/screenshots/customwordmenu.png" alt="Custom Word Menu" width="30%"/>
+</p>
