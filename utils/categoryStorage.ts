@@ -37,7 +37,75 @@ export async function getSelectedCategories(): Promise<Category[]> {
         ? { ...cat, words: { en: customWords, nl: customWords } }
         : cat
     );
-    return categories;
+
+    // Merge updates from DEFAULT_CATEGORIES when the default set changed (for example when
+    // new words or a bumped `version` were added in the app). This ensures users who
+    // already have stored categories still receive content updates without needing to
+    // explicitly reset to defaults.
+    const storedById = new Map(categories.map(c => [c.id, c]));
+
+    function compareVersions(a?: string | null, b?: string | null) {
+      if (!a && !b) return 0;
+      if (!a) return -1;
+      if (!b) return 1;
+      const pa = a.split('.').map(n => parseInt(n, 10) || 0);
+      const pb = b.split('.').map(n => parseInt(n, 10) || 0);
+      for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+        const na = pa[i] || 0;
+        const nb = pb[i] || 0;
+        if (na > nb) return 1;
+        if (na < nb) return -1;
+      }
+      return 0;
+    }
+
+    // Walk defaults and merge in any new/updated categories
+    const merged = DEFAULT_CATEGORIES.reduce<Category[]>((acc, def) => {
+      const storedCat = storedById.get(def.id);
+      if (!storedCat) {
+        // New category added in defaults -> include it
+        acc.push(def);
+        return acc;
+      }
+
+      // If default has a version and it's newer than stored, update words & metadata
+      if (def.version && compareVersions(def.version, storedCat.version) > 0) {
+        acc.push({
+          ...storedCat,
+          // preserve user's enabled setting, but update words and metadata from defaults
+          enabled: storedCat.enabled,
+          words: def.words,
+          version: def.version,
+          name: def.name,
+          emoji: def.emoji,
+          author: def.author,
+        });
+      } else {
+        // keep stored category as-is
+        acc.push(storedCat);
+      }
+      return acc;
+    }, []);
+
+    // If there are any stored categories that aren't present in DEFAULT_CATEGORIES
+    // (user added custom ones), append them as well
+    const defaultIds = new Set(DEFAULT_CATEGORIES.map(d => d.id));
+    for (const cat of categories) {
+      if (!defaultIds.has(cat.id)) merged.push(cat);
+    }
+
+    // Persist merged result if it differs from what was loaded so future reads get the updates
+    try {
+      const mergedJson = JSON.stringify(merged);
+      const loadedJson = JSON.stringify(categories);
+      if (mergedJson !== loadedJson) {
+        await AsyncStorage.setItem(CATEGORIES_STORAGE_KEY, mergedJson);
+      }
+    } catch (err) {
+      // ignore persistence errors here
+    }
+
+    return merged;
   } catch (error) {
     console.error('Error loading categories:', error);
     // Fallback: update custom-words in default categories

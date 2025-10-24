@@ -1,6 +1,9 @@
 export interface Category {
   id: string;
   name: string;
+  author?: string | null;
+  emoji?: string | null;
+  version?: string | null; // This line remains unchanged
   words: {
     en: string[];
     nl: string[];
@@ -14,6 +17,9 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'famous-persons',
     name: 'Famous Persons',
+    author: "Jorik",
+    emoji: '🧑‍🎨',
+    version: "1.0.1",
     enabled: true,
     words: {
       en: [
@@ -22,7 +28,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
         'Michael Jackson', 'Elvis Presley', 'Marilyn Monroe', 'Tom Hanks', 'Walt Disney', 'Johan Cruijff',
         'Pablo Picasso', 'Vincent van Gogh', 'Marie Curie', 'Charles Darwin', 'Aristotle', 'Socrates',
         'Isaac Newton', 'J.K. Rowling', 'Stephen Hawking','Beyoncé', 'Taylor Swift', 'Winston Churchill',
-        'Oprah Winfrey', 'Barack Obama', 'Abraham Lincoln', 'Frida Kahlo', 'Andy Warhol', 'John Lennon',
+        'Oprah Winfrey', 'Barack Obama', 'Abraham Lincoln', 'Andy Warhol', 'John Lennon',
         'Madonna', 'Michael Jordan', 'Muhammad Ali', 'Serena Williams', 'Lionel Messi', 'Cristiano Ronaldo',
         'Mark Zuckerberg', 'Warren Buffett', 'Nikola Tesla', 'Galileo Galilei', 'Alexander the Great',
         'Julius Caesar', 'Theodore Roosevelt', 'Franklin D. Roosevelt', 'John F. Kennedy', 'Gordon Ramsay',
@@ -35,7 +41,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
         'Michael Jackson', 'Elvis Presley', 'Marilyn Monroe', 'Tom Hanks', 'Walt Disney', 'Johan Cruijff',
         'Pablo Picasso', 'Vincent van Gogh', 'Marie Curie', 'Charles Darwin', 'Aristoteles', 'Socrates',
         'Isaac Newton', 'J.K. Rowling', 'Stephen Hawking','Beyoncé', 'Taylor Swift', 'Winston Churchill',
-        'Oprah Winfrey', 'Barack Obama', 'Abraham Lincoln', 'Frida Kahlo', 'Andy Warhol', 'John Lennon',
+        'Oprah Winfrey', 'Barack Obama', 'Abraham Lincoln', 'Andy Warhol', 'John Lennon',
         'Madonna', 'Michael Jordan', 'Muhammad Ali', 'Serena Williams', 'Lionel Messi', 'Cristiano Ronaldo',
         'Mark Zuckerberg', 'Warren Buffett', 'Nikola Tesla', 'Galileo Galilei', 'Alexander de Grote',
         'Julius Caesar', 'Theodore Roosevelt', 'Franklin D. Roosevelt', 'John F. Kennedy', 'Gordon Ramsay',
@@ -47,6 +53,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'food',
     name: 'Food',
+    author: "Jorik",
+    emoji: '🍕',
     enabled: false,
     words: {
       en: [
@@ -84,6 +92,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'objects',
     name: 'Objects',
+    author: "Jorik",
+    emoji: '🪑',
     enabled: true,
     words: {
       en: [
@@ -123,6 +133,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'countries-cities',
     name: 'Countries & Cities',
+    author: "Jorik",
+    emoji: '🌍',
     enabled: true,
     words: {
       en: [
@@ -150,6 +162,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'jobs',
     name: 'Jobs & Professions',
+    author: "Jorik",
+    emoji: '💼',
     enabled: true,
     words: {
       en: [
@@ -181,6 +195,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'brands',
     name: 'Brands',
+    author: "Jorik",
+    emoji: '🏷️',
     enabled: true,
     words: {
       en: [
@@ -208,6 +224,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'activities',
     name: 'Activities',
+    author: "Jorik",
+    emoji: '🏃',
     enabled: true,
     words: {
       en: [
@@ -231,6 +249,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'music',
     name: 'Music',
+    author: "Jorik",
+    emoji: '🎵',
     enabled: true,
     words: {
       en: [
@@ -256,6 +276,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'places',
     name: 'Places',
+    author: "Jorik",
+    emoji: '📍',
     enabled: true,
     words: {
       en: [
@@ -295,6 +317,8 @@ export const DEFAULT_CATEGORIES: Category[] = [
   {
     id: 'nature-animals',
     name: 'Nature & Animals',
+    author: "Jorik",
+    emoji: '🦁',
     enabled: true,
     words: {
       en: [
@@ -324,9 +348,58 @@ export const DEFAULT_CATEGORIES: Category[] = [
     }
   },
   {
+    id: 'clash-royale',
+    name: 'Clash Royale Cards',
+    author: "Jorik",
+    emoji: '👑',
+    version: "1.0.1",
+    enabled: false,
+    words: {
+      en: [
+        'Skeletons', 'Fire Spirit', 'Electro Spirit', 'Ice Spirit', 'Heal Spirit',
+        'Goblins', 'Spear Goblins', 'Bomber', 'Bats', 'Zap', 'Giant Snowball', 'Ice Golem', 'Berserker', 'Barbarian Barrel',
+        'The Log', 'Wall Breakers', 'Suspicious Bush', 'Rage', 'Goblin Curse',
+        'Knight', 'Archers', 'Guards', 'Arrows', 'Tombstone', 'Cannon', 'Mega Minion',
+        'Goblin Hut', 'Goblin Cage', 'Valkyrie', 'Battle Ram', 'Skeleton Dragons', 'Bomb Tower',
+        'Mortar', 'Flying Machine', 'Baby Dragon', 'Dark Prince', 'Battle Healer', 'Freeze', 'Giant', 'Barbarians', 'Wizard',
+        'Mighty Miner', 'Rune Giant', 'Poison', 'Zappies', 'Furnace', 'Hunter', 'Inferno Dragon', 'Electro Wizard',
+        'Goblin Brawler', 'Phoenix', 'Magic Archer', 'Goblin Drill', 'Lumberjack', 'Night Witch', 'Mother Witch', 'Golden Knight',
+        'Inferno Tower', 'Witch', 'Royal Hogs', 'Balloon', 'Prince', 'Minion Horde', 'Hog Rider',
+        'Electro Dragon', 'Rascals', 'Bowler', 'Executioner', 'Cannon Cart', 'Goblin Machine', 'Monk', 'Goblinstein',
+        'Archer Queen', 'Rocket', 'Royal Giant', 'Giant Skeleton', 'Lightning', 'Barbarian Hut', 'Goblin Giant', 'Elite Barbarians',
+        'X-Bow', 'Sparky', 'Elixir Collector', 'Spirit Empress', 'Boss Bandit', 'P.E.K.K.A.', 'Royal Recruits', 'Mega Knight',
+        'Electro Giant', 'Lava Hound', 'Golem', 'Three Musketeers',
+        'Archers', 'Bandit', 'Dart Goblin', 'Elixir Golem', 'Firecracker', 'Fisherman', 'Goblin Gang', 'Goblin Demolisher',
+        'Goblin Giant', 'Goblins', 'Golden Knight', 'Golem', 'Heal Spirit', 'Ice Wizard', 'Knight', 'Little Prince',
+        'Mega Minion', 'Mighty Miner', 'Miner', 'Mini P.E.K.K.A.', 'Minions', 'Monster', 'Musketeer', 'Princess', 'Ram Rider',
+        'Rascals', 'Royal Ghost', 'Rune Giant', 'Skeleton Army', 'Skeleton Barrel', 'Skeleton King', 'Sparky', 'Spear Goblins',
+        'Three Musketeers', 'Valkyrie', 'Witch', 'Wizard', 'Zappies', 'Bomb Tower', 'Cannon', 'Mortar', 'Tesla', 'Barbarian Hut',
+        'Elixir Collector', 'Goblin Drill', 'Tombstone', 'Barbarian Barrel', 'Earthquake', 'Fireball', 'Graveyard', 'Goblin Barrel'
+      ],
+      nl: [
+        'Skeletten', 'Vuurgeest', 'Elektrogeest', 'IJsgeest', 'Genezingsgeest', 'Spiegel', // 1 elixer
+        'Kobolden', 'Speerkobolden', 'Bommengooier', 'Vleermuizen', 'Zappen', 'Sneeuwbal', 'IJsgolem', 'Woesteling', 'Barbarenton', 
+        'De stam', 'Muurbrekers', 'Verdachte struik', 'Woede', 'Koboldenspreuk', // 2 elixer
+        'Ridder', 'Boogschutters', 'Gunstelingen', 'Pijlen', 'Grafsteen', 'Kanon', 'Megagunsteling', 'Wachters', 'Koboldenton', 
+        'Onkruid', 'Koboldenbende', 'Skelettenton', 'Blaaspijpkobold', 'Prinses', 'Mijnwerker', 'Vacuüm', 'Visser', 'Kleine Prins',
+        'Vuurwerkschutter', 'Aardbeving', 'IJstovenaar', 'Bandiet', 'Koninklijk', 'Pakketje', 'Elixergolem', 'Tornado', 'Klonen',  // 3 elixer
+        'Musketier', 'Mini P.E.K.K.A.', 'Koboldenhut', 'Koboldenkooi','Valkyrie', 'Strijdram', 'Skelettendraak', 'Bomtoren', 
+        'Mortier', 'Vliegmachine', 'Babydraak', 'Duistere prins', 'Strijdheler', 'Bevriezen', 'Reus', 'Barbaren', 'Tovenaar', 'Megamijnwerker',
+        'Runereuzin', 'Gif', 'Zappies','Oven', 'Jager', 'Infernodraak', 'Elektrotovenaar','Sloperkobold', 'Feniks', 'Magische boogschutter', 
+        'Koboldenboor', 'Houthakker', 'Nachtheks', 'Heksenmoeder' , 'Gouden ridder', // 4 elixer
+        'Infernotoren', 'Heks', 'Koninklijke varkens', 'Ballon', 'Prins', 'Horde Gunstelingen', 'Bokkenrijder', 'Elektrodraak', 
+        'Rakkers', 'Bowler', 'Beul', 'Kannonenkar', 'Koboldenmachine', 'Monnik', 'Koboldenstein', 'Boogschutterskoningin', // 5 elixer
+        'Raket', 'Koninklijke reus', 'Reuzenskelet', 'Bliksem', 'Barbarenhut', 'Koboldenreus', 'Elitebarbaren', 'X-boog', 'Vonkje', 
+        'Elixerpomp', 'Geestenkeizerin', 'Struikroverbaas', // 6 elixer
+        'P.E.K.K.A.', 'Koninklijke rekruten', 'Megaridder', 'Elektroreus', 'Lavahond', 'Golem', 'Drie Musketiers' // 7+ elixer
+      ]
+    }
+  },
+  {
     id: 'custom-words',
     name: 'Custom Words',
     enabled: false,
+    emoji: '✍️',
     words: {
       en: [],
       nl: []

@@ -67,9 +67,9 @@ export default function GameScreen() {
       setStartingPlayer(randomStartingPlayer);
 
       if (randomStartingPlayer === randomImposter) {
-        // 40% chance to make someone else the imposter
-        if (Math.random() < 0.4) {
-          const newImposter = (randomImposter % numPlayers) + 1;
+        // 50% chance to reroll the imposter if they are the starting player
+        if (Math.random() < 0.5) {
+          const newImposter = Math.floor(Math.random() * numPlayers) + 1;
           setImposter(newImposter);
         }
       }

@@ -18,6 +18,7 @@ export default function SettingsScreen() {
   const [customWords, setCustomWords] = useState<string[]>([]);
   const [giveImposterHint, setGiveImposterHint] = useState(false);
   const [language, setLanguage] = useState<Language>('en');
+  const [searchText, setSearchText] = useState('');
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -230,29 +231,66 @@ export default function SettingsScreen() {
           </ThemedView>
 
           <ThemedView style={styles.categoriesContainer}>
-            {categories.map((category) => {
-              const isCustom = category.id === 'custom-words';
-              const countCurrent = isCustom ? customWords.length : (category.words[language]?.length || 0);
-              return (
-                <View key={category.id} style={[styles.categoryItem, { backgroundColor: theme.colors.surface }]}> 
-                  <View style={styles.categoryInfo}>
-                    <ThemedText type="subtitle">{category.name}</ThemedText>
-                    <ThemedText style={{ color: theme.colors.icon, fontSize: 14 }}>
-                      {countCurrent} words
-                    </ThemedText>
-                  </View>
-                  <Switch
-                    value={category.enabled}
-                    onValueChange={() => handleToggleCategory(category.id)}
-                    trackColor={{ 
-                      false: theme.colors.surface, 
-                      true: theme.colors.primary + '40' 
-                    }}
-                    thumbColor={category.enabled ? theme.colors.primary : theme.colors.icon}
-                  />
-                </View>
-              );
-            })}
+            {/* Search / Filter */}
+            <ThemedInput
+              placeholder="Search categories..."
+              value={searchText}
+              onChangeText={setSearchText}
+              style={[styles.searchInput, { marginBottom: 12 }]}
+            />
+
+            {categories
+              .filter(cat => {
+                if (!searchText) return true;
+                const s = searchText.toLowerCase();
+                return (
+                  cat.name.toLowerCase().includes(s) ||
+                  (cat.author || '').toLowerCase().includes(s) ||
+                  cat.id.toLowerCase().includes(s)
+                );
+              })
+              .map((category) => {
+                const isCustom = category.id === 'custom-words';
+                const countCurrent = isCustom ? customWords.length : (category.words[language]?.length || 0);
+                const initials = category.name.split(' ').map(p => p[0]).slice(0,3).join('').toUpperCase();
+                const emoji = category.emoji || null;
+                return (
+                  <TouchableOpacity
+                    key={category.id}
+                    activeOpacity={0.8}
+                    onPress={() => handleToggleCategory(category.id)}
+                    style={[styles.categoryItem, { backgroundColor: theme.colors.surface }]}
+                  >
+                    <View style={styles.categoryLeft}>
+                      <View style={[styles.avatar, { backgroundColor: theme.colors.primary + '20', borderColor: theme.colors.primary }]}> 
+                        <ThemedText style={[styles.avatarText, { fontSize: emoji ? 20 : 12 }]}>{emoji || initials}</ThemedText>
+                      </View>
+                      <View style={{ marginLeft: 12, flex: 1 }}>
+                        <ThemedText type="subtitle" style={styles.categoryTitle}>{category.name}</ThemedText>
+                        <ThemedText style={[styles.categorySubtitle, { color: theme.colors.icon }]}>
+                          {countCurrent} words {category.author ? `• Made by ${category.author}` : ''}
+                        </ThemedText>
+                      </View>
+                    </View>
+
+                    <View style={styles.categoryRight}>
+                      
+                      <View style={[styles.countBadge, { backgroundColor: theme.colors.primary + '20' }]}> 
+                        <ThemedText style={{ fontWeight: 'bold' }}>{countCurrent} words</ThemedText>
+                      </View>
+                      <Switch
+                        value={category.enabled}
+                        onValueChange={() => handleToggleCategory(category.id)}
+                        trackColor={{ 
+                          false: theme.colors.surface, 
+                          true: theme.colors.primary + '40' 
+                        }}
+                        thumbColor={category.enabled ? theme.colors.primary : theme.colors.icon}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
           </ThemedView>
 
           {enabledCount === 0 && (
@@ -440,5 +478,52 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderLeftWidth: 4,
     borderLeftColor: '#ffc107',
+  },
+  searchInput: {
+    width: '100%'
+  },
+  categoryLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 44 / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  avatarText: {
+    fontWeight: '700',
+  },
+  categoryTitle: {
+    fontSize: 16,
+    marginBottom: 2,
+  },
+  categorySubtitle: {
+    fontSize: 13,
+  },
+  categoryRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  authorChip: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginRight: 8,
+  },
+  countBadge: {
+    minWidth: 36,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
   },
 });
